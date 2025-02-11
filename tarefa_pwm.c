@@ -40,7 +40,13 @@ int main()
     uint16_t rot_90_graus = getDutyCycle(ROTACAO_90_GRAU); // Calcula o valor necessário para obter um duty cycle de 7,35%, que corresponde a um valor de 1470us para o ciclo ativo
     uint16_t rot_180_graus = getDutyCycle(ROTACAO_180_GRAU); // Calcula o valor necessário para obter um duty cycle de 2,5%, que corresponde a um valor de 500us para o ciclo ativo
 
-
+    // Acionamento do servo em uma posição diferente a cada 5 segundos, variando entre 0, 90 e 180 graus
+    pwm_set_gpio_level(PWM_SERVO,rot_0_graus);
+    sleep_ms(5000);
+    pwm_set_gpio_level(PWM_SERVO,rot_90_graus);
+    sleep_ms(5000);
+    pwm_set_gpio_level(PWM_SERVO,rot_180_graus);
+    sleep_ms(5000);
 
     while (true) {
        
