@@ -8,7 +8,14 @@
 const float PWM_DIV = 250.0; 
 const uint16_t WRAP = 10000;
 
+#define ROTACAO_0_GRAU 0.12 // valor que representa um ciclo ativo de 2400us
+#define ROTACAO_90_GRAU 0.0735 // valor que representa um ciclo ativo de 1470us
+#define ROTACAO_180_GRAU 0.025 // valor que representa um ciclo ativo de 500us
 
+// Função que converte um valor percentual (Duty Cycle) no valor inteiro correspondente a ser utilizado na função pwm_set_gpio_level para se obter o efeito esperado
+uint16_t getDutyCycle(float percentual){
+    return (uint16_t) (percentual*(float) WRAP);
+}
 
 // Função que realiza as configurações necessárias para que o pino GPIO escolhido funcione com o PWM numa frequência de 50Hz
 void configuracoes_iniciais(){
@@ -27,6 +34,12 @@ int main()
 
 
     configuracoes_iniciais();
+
+    // As variáveis a seguir controlarão a posição do servo motor nas posições indicadas
+    uint16_t rot_0_graus = getDutyCycle(ROTACAO_0_GRAU); // Calcula o valor necessário para obter um duty cycle de 12%, que corresponde a um valor de 2400us para o ciclo ativo
+    uint16_t rot_90_graus = getDutyCycle(ROTACAO_90_GRAU); // Calcula o valor necessário para obter um duty cycle de 7,35%, que corresponde a um valor de 1470us para o ciclo ativo
+    uint16_t rot_180_graus = getDutyCycle(ROTACAO_180_GRAU); // Calcula o valor necessário para obter um duty cycle de 2,5%, que corresponde a um valor de 500us para o ciclo ativo
+
 
 
     while (true) {
