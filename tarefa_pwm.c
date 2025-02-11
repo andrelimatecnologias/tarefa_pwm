@@ -12,6 +12,11 @@ const uint16_t WRAP = 10000;
 #define ROTACAO_90_GRAU 0.0735 // valor que representa um ciclo ativo de 1470us
 #define ROTACAO_180_GRAU 0.025 // valor que representa um ciclo ativo de 500us
 
+// Variável que define o tamanho do passo correspondente a um ciclo ativo de 5us
+const float PASSO_ROTACAO = 0.00025;
+
+float angulo_atual = ROTACAO_180_GRAU;
+
 // Função que converte um valor percentual (Duty Cycle) no valor inteiro correspondente a ser utilizado na função pwm_set_gpio_level para se obter o efeito esperado
 uint16_t getDutyCycle(float percentual){
     return (uint16_t) (percentual*(float) WRAP);
@@ -30,6 +35,9 @@ void configuracoes_iniciais(){
 int main()
 {
   
+    // Essa variável será utilizada para o controle continuo e suave de rotação do servo motor. onde quando este alcançar os ângulos máximos, seu valor irá mudar, para garantir que ele continuará se movendo, em outra direção, repetindo o ciclo
+    int8_t direcao = -1;
+
     stdio_init_all();
 
 
@@ -49,6 +57,14 @@ int main()
     sleep_ms(5000);
 
     while (true) {
-       
+        uint16_t duty_cycle_atual = getDutyCycle(angulo_atual);
+        if(duty_cycle_atual<rot_180_graus){
+            direcao = 1;
+        }else if(duty_cycle_atual>rot_0_graus){
+            direcao = -1;
+        }
+        angulo_atual += PASSO_ROTACAO*direcao;
+        pwm_set_gpio_level(PWM_SERVO,getDutyCycle(angulo_atual));
+        sleep_ms(10);
     }
 }
