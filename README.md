@@ -35,7 +35,7 @@ Este repositório contém o projeto de controle de posição de um servo motor a
 A prática pode ser realizada apenas em simulação, mas alternando o pino GPIO utilizado para o valor 12 é possível observar o comportamente pwm gerado em um LED RGB
 
 ## Vídeo de teste
-Um vídeo mostrando o teste desta atividade pode ser acessado no link: (Aguarde)
+Um vídeo mostrando o teste desta atividade pode ser acessado no link: (https://youtu.be/5FXdelHOFyE)
 
 ## Autor do projeto:
 André Souza Lima
